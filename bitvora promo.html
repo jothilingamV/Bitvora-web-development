@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bitvora Web Design — Promo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Marcellus&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap');
+
+  :root{
+    --bg:#070604;
+    --gold:#d9a441;
+    --gold-light:#f3d489;
+    --gold-deep:#9c6e22;
+    --white:#f5f1e8;
+    --muted:#b8ab8e;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{
+    width:100%;height:100%;
+    background:var(--bg);
+    overflow:hidden;
+    font-family:'Jost',sans-serif;
+  }
+
+  .stage{
+    position:relative;
+    width:100vw;height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(217,164,65,0.10), transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(217,164,65,0.08), transparent 50%),
+      #070604;
+  }
+
+  /* gold frame */
+  .frame{
+    position:absolute;
+    top:24px;left:24px;right:24px;bottom:24px;
+    border:1px solid rgba(217,164,65,0.45);
+    pointer-events:none;
+    opacity:0;
+    animation: fadeIn 1.2s ease forwards 0.2s;
+  }
+  .frame::before, .frame::after{
+    content:'';
+    position:absolute;
+    width:46px;height:46px;
+    border:1px solid var(--gold);
+  }
+  .frame::before{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+  .frame::after{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+
+  /* drifting particles */
+  .particles{
+    position:absolute; inset:0; overflow:hidden; pointer-events:none;
+  }
+  .particle{
+    position:absolute;
+    width:3px;height:3px;
+    border-radius:50%;
+    background:var(--gold-light);
+    box-shadow:0 0 8px 2px rgba(243,212,137,0.7);
+    opacity:0;
+    animation: drift linear infinite;
+  }
+
+  @keyframes drift{
+    0%{ transform:translateY(110vh) translateX(0); opacity:0; }
+    8%{ opacity:0.8; }
+    92%{ opacity:0.5; }
+    100%{ transform:translateY(-10vh) translateX(30px); opacity:0; }
+  }
+
+  /* central content stack — scenes shown in sequence */
+  .scene{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    opacity:0;
+    padding:5vw;
+  }
+
+  /* ===== SCENE 1 — Logo intro ===== */
+  #scene1{ animation: sceneShow 4.5s ease forwards 0s; }
+  .logo-script{
+    font-family:'Great Vibes', cursive;
+    font-size:7.5vw;
+    color:var(--gold-light);
+    background:linear-gradient(180deg,#fbe6a8,var(--gold) 60%,var(--gold-deep));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:0 0 35px rgba(217,164,65,0.35);
+    letter-spacing:1px;
+    opacity:0;
+    transform:translateY(20px);
+    animation: riseIn 1s ease forwards 0.3s;
+  }
+  .logo-sub{
+    font-family:'Marcellus', serif;
+    color:var(--white);
+    letter-spacing:6px;
+    font-size:1.3vw;
+    text-transform:uppercase;
+    margin-top:6px;
+    opacity:0;
+    animation: riseIn 1s ease forwards 0.9s;
+  }
+  .logo-rule{
+    width:0;
+    height:1px;
+    background:var(--gold);
+    margin-top:22px;
+    animation: growLine 1s ease forwards 1.4s;
+  }
+
+  /* ===== SCENE 2 — Headline ===== */
+  #scene2{ animation: sceneShow 5.5s ease forwards 4.2s; }
+  .eyebrow{
+    font-family:'Jost';
+    letter-spacing:6px;
+    font-size:1vw;
+    color:var(--gold);
+    text-transform:uppercase;
+    opacity:0;
+    animation: riseIn 0.8s ease forwards 0.1s;
+  }
+  .headline{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:700;
+    line-height:0.98;
+    margin-top:14px;
+  }
+  .headline .l1{
+    font-size:6.4vw;
+    color:var(--white);
+    display:block;
+    opacity:0;
+    transform:translateY(25px);
+    animation: riseIn 0.9s ease forwards 0.35s;
+  }
+  .headline .l2{
+    font-size:7.6vw;
+    display:block;
+    background:linear-gradient(180deg,#fbe6a8,var(--gold) 55%,var(--gold-deep));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    opacity:0;
+    transform:translateY(25px);
+    animation: riseIn 0.9s ease forwards 0.65s;
+  }
+  .tagline{
+    margin-top:20px;
+    font-size:1.15vw;
+    color:var(--muted);
+    letter-spacing:1px;
+    opacity:0;
+    animation: riseIn 0.8s ease forwards 1.2s;
+  }
+  .tagline b{ color:var(--gold-light); font-weight:500; }
+
+  /* ===== SCENE 3 — Two services ===== */
+  #scene3{ animation: sceneShow 5.5s ease forwards 9.7s; }
+  .services{
+    display:flex;
+    gap:4vw;
+  }
+  .service-card{
+    border:1px solid rgba(217,164,65,0.4);
+    padding:2.4vw 2.6vw;
+    width:22vw;
+    opacity:0;
+    transform:translateY(30px);
+    background:linear-gradient(180deg,rgba(217,164,65,0.05),transparent);
+  }
+  .service-card:nth-child(1){ animation: riseIn 0.8s ease forwards 0.3s; }
+  .service-card:nth-child(2){ animation: riseIn 0.8s ease forwards 0.7s; }
+  .service-num{
+    font-family:'Cormorant Garamond';
+    color:var(--gold);
+    font-size:1.1vw;
+    letter-spacing:3px;
+  }
+  .service-title{
+    font-family:'Marcellus';
+    color:var(--white);
+    font-size:1.9vw;
+    margin-top:10px;
+    text-transform:uppercase;
+  }
+  .service-title span{ color:var(--gold-light); display:block; }
+  .service-desc{
+    margin-top:12px;
+    color:var(--muted);
+    font-size:0.95vw;
+    line-height:1.5;
+  }
+
+  /* ===== SCENE 4 — Checklist ===== */
+  #scene4{ animation: sceneShow 6.5s ease forwards 15.7s; }
+  .check-title{
+    font-family:'Marcellus';
+    color:var(--gold);
+    letter-spacing:4px;
+    font-size:1.5vw;
+    text-transform:uppercase;
+    margin-bottom:24px;
+    opacity:0;
+    animation: riseIn 0.7s ease forwards 0.1s;
+  }
+  .checklist{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    text-align:left;
+  }
+  .check-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-family:'Jost';
+    font-size:1.3vw;
+    color:var(--white);
+    opacity:0;
+    transform:translateX(-20px);
+  }
+  .check-item .tick{
+    width:24px;height:24px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gold-light);
+    font-size:0.9vw;
+    flex-shrink:0;
+  }
+  .check-item:nth-child(1){ animation: slideRight 0.6s ease forwards 0.4s; }
+  .check-item:nth-child(2){ animation: slideRight 0.6s ease forwards 0.7s; }
+  .check-item:nth-child(3){ animation: slideRight 0.6s ease forwards 1.0s; }
+  .check-item:nth-child(4){ animation: slideRight 0.6s ease forwards 1.3s; }
+  .check-item:nth-child(5){ animation: slideRight 0.6s ease forwards 1.6s; }
+  .check-item:nth-child(6){ animation: slideRight 0.6s ease forwards 1.9s; }
+
+  /* ===== SCENE 5 — Price ===== */
+  #scene5{ animation: sceneShow 6s ease forwards 22.4s; }
+  .price-ring{
+    width:24vw;height:24vw;
+    border-radius:50%;
+    border:1.5px solid var(--gold);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 0 0 rgba(217,164,65,0.4);
+    opacity:0;
+    transform:scale(0.85);
+    animation: ringIn 0.9s ease forwards 0.2s, pulse 2.4s ease-in-out infinite 1.2s;
+  }
+  .price-label{
+    font-family:'Jost';
+    letter-spacing:5px;
+    color:var(--muted);
+    font-size:0.95vw;
+    text-transform:uppercase;
+  }
+  .price-amount{
+    font-family:'Cormorant Garamond';
+    font-weight:700;
+    font-size:5.5vw;
+    color:var(--gold-light);
+    line-height:1;
+    margin:6px 0;
+  }
+  .price-only{
+    font-family:'Marcellus';
+    color:var(--white);
+    letter-spacing:4px;
+    font-size:1.1vw;
+    text-transform:uppercase;
+  }
+  .price-stars{ color:var(--gold); margin-top:10px; font-size:1.1vw; letter-spacing:4px; }
+
+  /* ===== SCENE 6 — Contact ===== */
+  #scene6{ animation: sceneShow 6s ease forwards 28.6s; }
+  .contact-name{
+    font-family:'Cormorant Garamond';
+    font-weight:700;
+    color:var(--white);
+    font-size:3.2vw;
+    opacity:0;
+    animation: riseIn 0.8s ease forwards 0.2s;
+  }
+  .contact-role{
+    font-family:'Jost';
+    color:var(--gold);
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-size:1vw;
+    margin-top:8px;
+    opacity:0;
+    animation: riseIn 0.8s ease forwards 0.5s;
+  }
+  .contact-phone{
+    margin-top:30px;
+    font-family:'Marcellus';
+    color:var(--gold-light);
+    font-size:1.8vw;
+    letter-spacing:2px;
+    opacity:0;
+    animation: riseIn 0.8s ease forwards 0.9s;
+  }
+  .contact-cta{
+    margin-top:18px;
+    color:var(--muted);
+    font-size:1.05vw;
+    letter-spacing:1px;
+    opacity:0;
+    animation: riseIn 0.8s ease forwards 1.3s;
+  }
+
+  /* ===== keyframes ===== */
+  @keyframes fadeIn{ to{ opacity:1; } }
+  @keyframes sceneShow{
+    0%{ opacity:0; }
+    8%{ opacity:1; }
+    85%{ opacity:1; }
+    100%{ opacity:0; }
+  }
+  @keyframes riseIn{ to{ opacity:1; transform:translateY(0); } }
+  @keyframes slideRight{ to{ opacity:1; transform:translateX(0); } }
+  @keyframes growLine{ to{ width:140px; } }
+  @keyframes ringIn{ to{ opacity:1; transform:scale(1); } }
+  @keyframes pulse{
+    0%,100%{ box-shadow:0 0 0 0 rgba(217,164,65,0.35); }
+    50%{ box-shadow:0 0 40px 8px rgba(217,164,65,0.25); }
+  }
+
+  .loop-note{
+    position:absolute;
+    bottom:10px;right:18px;
+    font-size:10px;
+    color:rgba(217,164,65,0.4);
+    font-family:'Jost';
+    letter-spacing:1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+  <div class="frame"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="scene" id="scene1">
+    <div class="logo-script">Bitvora</div>
+    <div class="logo-sub">Web Design</div>
+    <div class="logo-rule"></div>
+  </div>
+
+  <div class="scene" id="scene2">
+    <div class="eyebrow">Premium Website Services</div>
+    <div class="headline">
+      <span class="l1">Design That Speaks,</span>
+      <span class="l2">Websites That Work</span>
+    </div>
+    <div class="tagline">Crafted for <b>Thirupathur</b> businesses who want to stand out online</div>
+  </div>
+
+  <div class="scene" id="scene3">
+    <div class="services">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-title">Web<span>Development</span></div>
+        <div class="service-desc">Custom, fast &amp; scalable websites built for performance.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-title">Web<span>Design</span></div>
+        <div class="service-desc">Creative, modern &amp; responsive designs that convert.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene" id="scene4">
+    <div class="check-title">What You Get</div>
+    <div class="checklist">
+      <div class="check-item"><span class="tick">✓</span> 100% Responsive Design</div>
+      <div class="check-item"><span class="tick">✓</span> SEO Friendly Structure</div>
+      <div class="check-item"><span class="tick">✓</span> Fast Loading Speed</div>
+      <div class="check-item"><span class="tick">✓</span> Modern &amp; Premium UI/UX</div>
+      <div class="check-item"><span class="tick">✓</span> Easy to Manage</div>
+      <div class="check-item"><span class="tick">✓</span> Support &amp; Maintenance</div>
+    </div>
+  </div>
+
+  <div class="scene" id="scene5">
+    <div class="price-ring">
+      <div class="price-label">Starting From</div>
+      <div class="price-amount">₹1000</div>
+      <div class="price-only">Only</div>
+      <div class="price-stars">★★★★★</div>
+    </div>
+  </div>
+
+  <div class="scene" id="scene6">
+    <div class="contact-name">Jothilingam</div>
+    <div class="contact-role">Web Developer &amp; Web Designer</div>
+    <div class="contact-phone">+91 93458 23403</div>
+    <div class="contact-cta">Let's Build Your Dream Website</div>
+  </div>
+
+  <div class="loop-note">Bitvora · Elegant Design · Powerful Performance · Lasting Impact</div>
+</div>
+
+<script>
+  // generate drifting gold particles
+  const container = document.getElementById('particles');
+  const COUNT = 28;
+  for(let i=0;i<COUNT;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const left = Math.random()*100;
+    const size = 2 + Math.random()*3;
+    const dur = 8 + Math.random()*10;
+    const delay = Math.random()*10;
+    p.style.left = left+'vw';
+    p.style.width = size+'px';
+    p.style.height = size+'px';
+    p.style.animationDuration = dur+'s';
+    p.style.animationDelay = delay+'s';
+    container.appendChild(p);
+  }
+
+  // total sequence length (scene6 start 28.6s + 6s show + buffer)
+  const TOTAL = 35500;
+  function restart(){
+    const stage = document.getElementById('stage');
+    const scenes = document.querySelectorAll('.scene, .frame');
+    scenes.forEach(el=>{
+      el.style.animation = 'none';
+    });
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        scenes.forEach(el=>{
+          el.style.animation = '';
+        });
+      });
+    });
+  }
+  setInterval(restart, TOTAL);
+</script>
+
+</body>
+</html>
